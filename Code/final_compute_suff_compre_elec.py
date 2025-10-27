@@ -50,8 +50,8 @@ def compute_sufficiency_comprehensiveness_sample(model, x_sample, attributions, 
         with torch.no_grad():
             y_comp = model(x_comp_tensor).cpu().numpy()
 
-        suff_list.append(np.mean(y_full - y_suff))
-        comp_list.append(np.mean(y_full - y_comp))
+        suff_list.append(np.mean(np.abs(y_full - y_suff)))
+        comp_list.append(np.mean(np.abs(y_full - y_comp)))
 
     return suff_list, comp_list
 
@@ -237,4 +237,5 @@ if __name__ == "__main__":
     suff_avg, comp_avg, _, _ = compute_suff_comp_dataset(model, X_test, gt_main, q_values)
 
     print(f"Dynamic -> 平均Sufficiency: {suff_avg:.4f}, 平均Comprehensiveness: {comp_avg:.4f}")
+
 
